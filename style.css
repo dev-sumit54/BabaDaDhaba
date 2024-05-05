@@ -42,3 +42,18 @@ h1{
   text-align: center;
   padding: 15px;
 }
+.main-div{
+  width: 80%;
+  margin:50px 10%;
+  display: flex;
+  flex-wrap:wrap ;
+  justify-content: space-evenly;
+
+}
+.favourite-btn{
+  margin-left: 80px;
+}
+.meal-img{
+  height: 350px;
+  padding: 25px;
+}
