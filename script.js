@@ -1,3 +1,4 @@
+//  accessing DOM elements for user interaction.
 let searched_Meal = document.getElementById("search-bar");
 let meals_Container = document.getElementById("meals-div");
 let favourite_Meal = document.getElementById("favourite-meal");
@@ -7,10 +8,9 @@ let homeBtn = document.getElementById("home-btn");
 let all_Meal_URL;
 let fav_meal_array = [];
 
-//localStorage.setItem("favourite_meal_Item", []);
-
+// Function to add or remove meal from favorites.
 function addtoFavourite(mealId) {
-  let meal = localStorage.getItem("favourite_meal_Item"); //1
+  let meal = localStorage.getItem("favourite_meal_Item");
   let element = document.getElementById("fav-" + mealId);
   mealId = mealId.toString();
   if (meal !== null) {
@@ -32,7 +32,7 @@ function addtoFavourite(mealId) {
   }
   localStorage.setItem("favourite_meal_Item", fav_meal_array);
 }
-
+//Adding and removing meal from more details page
 function addtoFavouriteFromMoreDetails(mealId) {
   let btn = document.getElementById("AddfromMoreDetails");
   let meal = localStorage.getItem("favourite_meal_Item"); //1
@@ -59,13 +59,14 @@ function addtoFavouriteFromMoreDetails(mealId) {
   }
   localStorage.setItem("favourite_meal_Item", fav_meal_array);
 }
-
+// Fumction to get the all searched meal from api
 function showSearchedmeal() {
   let keyword = searched_Meal.value;
   all_Meal_URL = `https://www.themealdb.com/api/json/v1/1/search.php?s=${keyword}`;
   showResult(all_Meal_URL);
 }
 
+//show all the meals fetched from an API
 async function showResult(URL) {
   const response = await fetch(URL);
   if (!response.ok) {
@@ -99,10 +100,7 @@ async function showResult(URL) {
   }
 }
 
-function addToFav(itemId) {
-  fav_meal_array.push(itemId);
-}
-
+//Display detailed information about a selected meal
 async function showDetails(mealId) {
   header.style.display = "none";
   homeBtn.style.display = "block";
@@ -139,7 +137,7 @@ async function showDetails(mealId) {
     </div>
     `;
 }
-
+//fetching and showing all the favorite meal
 async function allFavoriteMeal() {
   let arr = localStorage.getItem("favourite_meal_Item");
   meals_Container.innerHTML = "";
@@ -161,7 +159,7 @@ async function allFavoriteMeal() {
       <div class="card-body">
         <h5 class="card-title">${meals.strMeal}</h5>
         <a href="Javascript:void(0)" class="btn btn-primary" onclick="showDetails(${meals.idMeal})">More Details</a>
-        <a href="Javascript:void(0)" class="btn btn-danger mt-2" onclick="remotefromFavourite(${meals.idMeal})">Remove From Favourite</a>
+        <a href="Javascript:void(0)" class="btn btn-danger mt-2" onclick="removefromFavourite(${meals.idMeal})">Remove From Favourite</a>
       </div>
       </div>
       </div>
@@ -177,9 +175,9 @@ async function allFavoriteMeal() {
       "<h3 class ='text-center' >No Data Found...</h3>";
   }
 }
-
-function remotefromFavourite(mealId) {
-  let allmeal = localStorage.getItem("favourite_meal_Item"); //1 2 4 5
+//Remove meal from favorites and update the displayed list of favorite meals
+function removefromFavourite(mealId) {
+  let allmeal = localStorage.getItem("favourite_meal_Item");
   let arr = allmeal.split(",");
 
   let newMeal = arr.filter(function (item) {
@@ -188,13 +186,14 @@ function remotefromFavourite(mealId) {
   localStorage.setItem("favourite_meal_Item", newMeal);
   allFavoriteMeal();
 }
-
+// Return to home screen, clearing search input and displayed meal cards
 function home() {
   header.style.display = "block";
   homeBtn.style.display = "none";
   searched_Meal.value = "";
   meals_Container.innerHTML = "";
 }
+// Adding all the event Listner.
 searched_Meal.addEventListener("keyup", showSearchedmeal);
 homeBtn.addEventListener("click", home);
 favourite_Meal.addEventListener("click", allFavoriteMeal);
