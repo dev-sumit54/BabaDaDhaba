@@ -144,7 +144,7 @@ async function allFavoriteMeal() {
 
   if (arr !== null) {
     let idArr = arr.split(",");
-    if (idArr.length > 0) {
+    if (idArr.length > 1) {
       for (let mealId of idArr) {
         if (mealId !== "") {
           const response = await fetch(
@@ -168,11 +168,11 @@ async function allFavoriteMeal() {
       }
     } else {
       meals_Container.innerHTML =
-        "<h3 class ='text-center'>No Data Found...</h3>";
+        "<h3 class ='text-center'>No Meal Found....</h3>";
     }
   } else {
     meals_Container.innerHTML =
-      "<h3 class ='text-center' >No Data Found...</h3>";
+      "<h3 class ='text-center'>No Meal Found....</h3>";
   }
 }
 //Remove meal from favorites and update the displayed list of favorite meals
